@@ -482,3 +482,525 @@ Duration: 2 Weeks
 ## Mini Project
 
 Secure Azure Subscription
+
+# Stage 2 — DevOps Engineer
+
+**Estimated Duration:** 10–12 Weeks
+
+---
+
+# Phase 8 — Azure Monitoring & Governance
+
+**Duration:** 2 Weeks
+
+## Learn
+
+### Azure Monitor
+
+* Metrics
+* Logs
+* Alerts
+* Action Groups
+* Diagnostic Settings
+* Data Collection Rules
+* VM Insights
+* Container Insights
+
+### Log Analytics
+
+* Workspaces
+* KQL Basics
+* Saved Queries
+* Workbooks
+
+### Application Insights
+
+* Availability Tests
+* Live Metrics
+* Dependency Tracking
+* Performance Monitoring
+
+### Governance
+
+* Azure Policy
+* Management Groups
+* Resource Locks
+* Tags
+* Cost Management
+* Budgets
+* Reservations
+* Azure Advisor
+
+---
+
+## Hands-on
+
+* Configure Azure Monitor
+* Create Alerts
+* Configure Log Analytics
+* Build Dashboard
+* Enable VM Insights
+* Create Azure Policies
+
+---
+
+## Mini Project
+
+Implement centralized monitoring and governance for an Azure subscription.
+
+---
+
+# Phase 9 — Git
+
+**Duration:** 1 Week
+
+## Learn
+
+### Git Basics
+
+* Version Control
+* Repository
+* Commit
+* Clone
+* Init
+* Status
+* Log
+
+### Branching
+
+* Branch
+* Merge
+* Rebase
+* Cherry Pick
+* Squash
+
+### Collaboration
+
+* Pull Request
+* Merge Conflict
+* Tags
+* Releases
+
+### Advanced Git
+
+* Stash
+* Reflog
+* Reset
+* Revert
+* Hooks
+
+---
+
+## Hands-on
+
+* Create Repository
+* Branching
+* Merge
+* Resolve Conflicts
+* Cherry Pick
+* Rebase
+
+---
+
+## Mini Project
+
+Maintain Infrastructure Code using Git.
+
+---
+
+# Phase 10 — GitHub
+
+**Duration:** 1 Week
+
+## Learn
+
+* Repository Management
+* Branch Protection
+* Pull Requests
+* Code Reviews
+* Issues
+* Projects
+* Discussions
+* Wiki
+* GitHub CLI
+* GitHub Secrets
+* GitHub Packages
+* GitHub Actions (Basics)
+
+---
+
+## Hands-on
+
+* Create Repository
+* Configure Branch Protection
+* Review Pull Request
+* Configure Secrets
+
+---
+
+## Mini Project
+
+Host an Infrastructure Repository with proper Git workflow.
+
+---
+
+# Phase 11 — Azure DevOps
+
+**Duration:** 3 Weeks
+
+## Learn
+
+### Azure DevOps Organization
+
+### Azure Repos
+
+* Git Repository
+* Branch Policies
+* Pull Requests
+
+### Azure Boards
+
+* Epic
+* Feature
+* User Story
+* Task
+* Sprint
+* Kanban
+
+### Azure Pipelines
+
+* YAML Pipelines
+* Classic Pipelines
+* Build Pipeline
+* Release Pipeline
+* Variables
+* Variable Groups
+* Secure Files
+* Library
+* Templates
+* Self-hosted Agents
+* Microsoft-hosted Agents
+* Deployment Jobs
+* Environments
+* Approvals
+* Gates
+
+### Azure Artifacts
+
+### Azure Test Plans
+
+### CI/CD
+
+* Continuous Integration
+* Continuous Delivery
+* Continuous Deployment
+
+### Deployment Strategies
+
+* Rolling
+* Blue/Green
+* Canary
+
+---
+
+## Hands-on
+
+* Build Pipeline
+* Release Pipeline
+* YAML Pipeline
+* Deploy to Azure
+* Configure Self-hosted Agent
+
+---
+
+## Mini Project
+
+Deploy a multi-stage CI/CD pipeline using Azure DevOps.
+
+---
+
+# Phase 12 — Infrastructure as Code
+
+**Duration:** 4 Weeks
+
+## Learn
+
+### Terraform
+
+* Installation
+* Providers
+* Resources
+* Variables
+* Outputs
+* Locals
+* Modules
+* Remote State
+* Backend
+* State Locking
+* Workspaces
+* Lifecycle
+* Data Sources
+* Provisioners
+* Functions
+* Loops
+* Dynamic Blocks
+
+### Bicep
+
+* Syntax
+* Parameters
+* Modules
+* Outputs
+* Conditions
+* Loops
+
+### ARM Templates
+
+* Template Structure
+* Parameters
+* Variables
+* Outputs
+* Linked Templates
+
+### Packer
+
+* Image Creation
+* Azure Image Builder
+
+---
+
+## Hands-on
+
+* Deploy VM
+* Deploy VNet
+* Create Modules
+* Configure Remote State
+* Build Custom Images
+
+---
+
+## Mini Project
+
+Provision a complete Azure environment using Terraform.
+
+---
+
+# Stage 3 — Cloud Native Engineering
+
+**Estimated Duration:** 10–12 Weeks
+
+---
+
+# Phase 13 — Docker
+
+**Duration:** 2 Weeks
+
+## Learn
+
+* Containers
+* Images
+* Docker Engine
+* Docker Desktop
+* Docker CLI
+* Dockerfile
+* Image Layers
+* Volumes
+* Bind Mounts
+* Networks
+* Docker Compose
+* Multi-stage Builds
+* Image Optimization
+* Docker Registry
+* Azure Container Registry (ACR)
+
+---
+
+## Hands-on
+
+* Build Images
+* Push Images
+* Docker Compose
+* Connect Containers
+* Use ACR
+
+---
+
+## Mini Project
+
+Containerize a web application and push it to Azure Container Registry.
+
+---
+
+# Phase 14 — Kubernetes
+
+**Duration:** 4 Weeks
+
+## Learn
+
+### Core Concepts
+
+* Cluster
+* Control Plane
+* Worker Node
+* kubelet
+* kube-proxy
+* etcd
+
+### Objects
+
+* Pod
+* ReplicaSet
+* Deployment
+* StatefulSet
+* DaemonSet
+* Job
+* CronJob
+
+### Networking
+
+* Service
+* Ingress
+* Network Policy
+
+### Storage
+
+* Persistent Volume
+* Persistent Volume Claim
+* Storage Class
+
+### Configuration
+
+* ConfigMap
+* Secret
+
+### Scheduling
+
+* Node Selector
+* Affinity
+* Taints
+* Tolerations
+
+### Security
+
+* RBAC
+* Service Account
+* Pod Security
+
+---
+
+## Hands-on
+
+* Deploy Pods
+* Deploy Applications
+* Configure Ingress
+* Persistent Storage
+* Secrets
+* Autoscaling
+
+---
+
+## Mini Project
+
+Deploy a three-tier application on Kubernetes.
+
+---
+
+# Phase 15 — Azure Kubernetes Service (AKS)
+
+**Duration:** 2 Weeks
+
+## Learn
+
+* AKS Architecture
+* Node Pools
+* Cluster Autoscaler
+* HPA
+* ACR Integration
+* Azure CNI
+* Kubenet
+* Azure Policy for AKS
+* Monitoring
+* Upgrades
+* Backup
+* Security
+* Managed Identity
+* Private AKS
+* Azure AD Integration
+
+---
+
+## Hands-on
+
+* Create AKS Cluster
+* Deploy Applications
+* Configure HPA
+* Configure Monitoring
+* Upgrade Cluster
+
+---
+
+## Mini Project
+
+Deploy a production-ready AKS cluster integrated with Azure Container Registry.
+
+---
+
+# Phase 16 — Helm & GitOps
+
+**Duration:** 2 Weeks
+
+## Learn
+
+### Helm
+
+* Charts
+* Templates
+* Values
+* Releases
+* Repositories
+* Hooks
+
+### GitOps
+
+* GitOps Principles
+* Argo CD
+* FluxCD
+
+### Kubernetes Package Management
+
+* Kustomize
+* Helm Best Practices
+
+---
+
+## Hands-on
+
+* Deploy Helm Charts
+* Install Argo CD
+* Deploy using GitOps
+
+---
+
+## Mini Project
+
+Automate Kubernetes deployments using GitOps.
+
+---
+
+# Interview Readiness Checkpoint 2
+
+You should now be able to:
+
+* Use Git professionally
+* Design Git branching strategies
+* Build Azure DevOps pipelines
+* Write YAML pipelines
+* Implement CI/CD
+* Provision Azure using Terraform
+* Build Docker images
+* Manage Kubernetes clusters
+* Deploy production workloads on AKS
+* Use Helm for application packaging
+* Implement GitOps workflows
+
+At this point, you are ready for many **Azure DevOps Engineer** interviews in service-based companies and junior-to-mid level cloud engineering roles.
