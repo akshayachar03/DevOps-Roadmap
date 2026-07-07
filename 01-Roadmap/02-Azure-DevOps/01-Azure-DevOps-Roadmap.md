@@ -1,192 +1,90 @@
-# Azure DevOps Interview Roadmap
+# Azure DevOps Essential Interview Roadmap
 
 ## 1. DevOps Fundamentals
 - SDLC
+- Agile & Scrum
 - DevOps Lifecycle
-- Agile
-- Scrum
-- CI
-- CD
-- Continuous Deployment
-- Infrastructure as Code
-- Configuration Management
-- DevOps Best Practices
+- CI/CD
+- Infrastructure as Code (IaC)
 
-## 2. Azure DevOps Overview
-- Azure DevOps Services
-- Azure DevOps Components
-- Azure Repos
-- Azure Pipelines
-- Azure Boards
-- Azure Artifacts
-- Azure Test Plans
-- Organization
-- Project
-
-## 3. Git (Most Important)
-- Git Architecture
-- Repository
-- Clone
-- Commit
-- Push
-- Pull
+## 2. Git
+- Git Workflow
+- Clone, Commit, Push, Pull
 - Branching
 - Merge
 - Rebase
 - Pull Requests
 - Merge Conflicts
-- Branch Policies
-- Git Ignore
-- Tags
+- Branching Strategies
 
-## 4. Azure Repos
-- Repository Management
-- Branch Policies
-- Pull Requests
-- Code Review
-- Repository Permissions
+## 3. Azure DevOps Basics
+- Azure DevOps Services
+- Azure Repos
+- Azure Pipelines
+- Azure Boards
+- Organizations & Projects
 
-## 5. Azure Pipelines
+## 4. Azure Pipelines
 - CI Pipeline
 - CD Pipeline
-- Pipeline Components
-- Pipeline Stages
-- Jobs
-- Steps
-- Tasks
-- Triggers
-- Multi-stage Pipelines
-- Pipeline Variables
-- Variable Groups
-- Pipeline Templates
-
-## 6. YAML Pipelines
-- YAML Syntax
+- YAML Pipelines
 - Stages
 - Jobs
 - Steps
-- Conditions
-- Expressions
-- Runtime Parameters
-- Templates
-- Deployment Jobs
-
-## 7. Build & Release
-- Build Pipeline
-- Release Pipeline
-- Build Artifacts
+- Variables
+- Triggers
 - Pipeline Artifacts
-- Approvals
-- Gates
-- Rollback
-- Deployment History
+- Multi-stage Pipelines
 
-## 8. Build Agents
-- Microsoft Hosted Agents
+## 5. Build Agents
+- Microsoft-hosted Agents
 - Self-hosted Agents
 - Agent Pools
-- Agent Capabilities
-- Parallel Jobs
 
-## 9. Azure CLI & PowerShell
-- Azure CLI
-- Azure PowerShell
-- Authentication
-- Resource Management
-- Pipeline Integration
-
-## 10. Service Connections
-- Azure Resource Manager
-- Service Principal
-- Managed Identity
-- GitHub Connection
-- Docker Registry Connection
-- Kubernetes Connection
-
-## 11. Secrets Management
-- Pipeline Variables
-- Secret Variables
+## 6. Service Connections & Secrets
+- Service Connections
+- Service Principals
 - Variable Groups
-- Azure Key Vault Integration
-- Secure Files
+- Secret Variables
+- Azure Key Vault
 
-## 12. Infrastructure as Code
-- ARM Templates
-- Bicep
-- Terraform Fundamentals
-- Terraform State
-- Terraform Backend
-- Terraform Modules
-- Azure DevOps Integration
+## 7. Infrastructure as Code
+- Terraform Basics
+- ARM Templates (Basics)
+- Bicep (Basics)
 
-## 13. Docker
-- Docker Architecture
+## 8. Docker
 - Images
 - Containers
 - Dockerfile
 - Docker Compose
-- Docker Hub
 - Azure Container Registry (ACR)
 
-## 14. Kubernetes
-- Kubernetes Architecture
+## 9. Kubernetes
 - Pods
 - Deployments
-- ReplicaSets
 - Services
-- Ingress
 - ConfigMaps
 - Secrets
 - Helm
 - Azure Kubernetes Service (AKS)
-- Azure DevOps Deployment
 
-## 15. Testing & Code Quality
-- Unit Testing
-- Integration Testing
-- Code Coverage
-- SonarQube
-- SonarCloud
-- Quality Gates
-
-## 16. Monitoring
+## 10. Monitoring & Troubleshooting
 - Pipeline Logs
-- Build Logs
-- Release Logs
-- Azure Monitor
-- Log Analytics
-- Application Insights
-
-## 17. Security (DevSecOps)
-- Pipeline Security
-- Repository Security
-- Branch Protection
-- Secret Management
-- Dependency Scanning
-- Container Image Scanning
-
-## 18. Deployment Strategies
-- Rolling Deployment
-- Blue-Green Deployment
-- Canary Deployment
-- Feature Flags
-
-## 19. Troubleshooting
-- Pipeline Failures
-- YAML Errors
 - Build Failures
 - Deployment Failures
+- YAML Debugging
 - Agent Issues
-- Authentication Issues
-- Service Connection Issues
 
-## 20. Real-World Scenarios
+## 11. Security
+- Repository Permissions
+- Branch Policies
+- Secret Management
+- Pipeline Security
+
+## 12. Real-World Scenarios
 - End-to-End CI/CD Pipeline
-- CI/CD for .NET Applications
-- CI/CD for Java Applications
-- CI/CD for Node.js Applications
-- Docker Deployment Pipeline
-- Kubernetes Deployment Pipeline
-- Terraform Deployment Pipeline
-- Multi-Stage Pipeline
-- Development, QA, UAT, and Production Environments
+- Application Deployment
+- Docker Deployment
+- AKS Deployment
+- Terraform Deployment
