@@ -2,17 +2,15 @@
 
 ## Overview
 
-A **Namespace** is a logical partition within a Kubernetes cluster that provides isolation for Kubernetes resources.
+A **Namespace** is a logical partition within a Kubernetes cluster that allows you to organize, isolate, and manage resources.
 
-Namespaces allow multiple teams, applications, or environments to share the same Kubernetes cluster while keeping their resources separate.
+Namespaces enable multiple teams, projects, or environments to share the same Kubernetes cluster without resource conflicts.
 
-Without namespaces, all resources would exist in a single shared environment, making management difficult in large clusters.
+Without Namespaces, all resources are created in the **default** namespace unless explicitly specified.
 
 > **Interview Tip**
 >
-> Namespaces provide **logical isolation**, **not physical isolation**.
->
-> Pods in different namespaces can still communicate unless restricted by **Network Policies**.
+> Namespaces provide **logical isolation**, **not physical isolation**. All namespaces still share the same Kubernetes cluster and worker nodes.
 
 ---
 
@@ -21,12 +19,12 @@ Without namespaces, all resources would exist in a single shared environment, ma
 Namespaces are used to:
 
 - Organize cluster resources
-- Separate environments (Dev, Test, Prod)
+- Separate environments (Dev, QA, Prod)
 - Support multiple teams
-- Avoid naming conflicts
-- Apply resource quotas
-- Control access using RBAC
-- Simplify administration
+- Prevent naming conflicts
+- Apply Resource Quotas
+- Apply RBAC permissions
+- Improve cluster management
 
 ---
 
@@ -34,38 +32,29 @@ Namespaces are used to:
 
 ```mermaid
 flowchart TB
+    Cluster[Kubernetes Cluster]
 
-Cluster
+    Cluster --> Default[default Namespace]
+    Cluster --> Dev[dev Namespace]
+    Cluster --> QA[qa Namespace]
+    Cluster --> Prod[prod Namespace]
 
-Cluster --> Default
-
-Cluster --> Dev
-
-Cluster --> Test
-
-Cluster --> Production
-
-Default --> Pods1
-
-Dev --> Pods2
-
-Test --> Pods3
-
-Production --> Pods4
+    Default --> Pod1[Pods & Services]
+    Dev --> Pod2[Pods & Services]
+    QA --> Pod3[Pods & Services]
+    Prod --> Pod4[Pods & Services]
 ```
 
-Example
+Namespace Isolation
 
 ```mermaid
 flowchart LR
+    User[Developer]
+    Namespace[Namespace]
+    Resources[Pods, Services, Deployments]
 
-NamespaceA --> DeploymentA
-
-NamespaceA --> ServiceA
-
-NamespaceB --> DeploymentB
-
-NamespaceB --> ServiceB
+    User --> Namespace
+    Namespace --> Resources
 ```
 
 ---
@@ -73,24 +62,28 @@ NamespaceB --> ServiceB
 ## Key Components
 
 | Component | Purpose |
-|-----------|----------|
-| Namespace | Logical isolation |
-| Resources | Pods, Services, Deployments |
+|-----------|---------|
+| Namespace | Logical resource grouping |
+| Resources | Pods, Services, Deployments, etc. |
+| ResourceQuota | Limits resource usage |
+| LimitRange | Default resource limits |
 | RBAC | Access control |
-| Resource Quota | Resource limits |
-| Limit Range | Default resource constraints |
+| Network Policies | Network isolation between workloads |
 
 ---
 
 ## Types (if applicable)
 
+Kubernetes includes several built-in namespaces:
+
 | Namespace | Purpose |
-|------------|----------|
-| default | User workloads |
+|-----------|---------|
+| default | Default namespace for user workloads |
 | kube-system | Kubernetes system components |
-| kube-public | Public resources |
+| kube-public | Publicly readable resources |
 | kube-node-lease | Node heartbeat information |
-| Custom Namespace | User-created isolation |
+
+Custom namespaces can also be created for applications or teams.
 
 ---
 
@@ -98,41 +91,34 @@ NamespaceB --> ServiceB
 
 ```mermaid
 flowchart LR
+    A[Create Namespace]
+    B[Deploy Resources]
+    C[Manage Resources]
+    D[Apply RBAC & Quotas]
+    E[Delete Namespace]
 
-Create Namespace
-
-↓
-
-Deploy Resources
-
-↓
-
-Manage Resources
-
-↓
-
-Delete Namespace
+    A --> B --> C --> D --> E
 ```
 
 ---
 
 ## Configuration / Syntax (if applicable)
 
-Namespace YAML
+Create Namespace
 
 ```yaml
 apiVersion: v1
-
 kind: Namespace
 
 metadata:
   name: development
 ```
 
-Create
+Deploy a Pod in a Namespace
 
-```bash
-kubectl apply -f namespace.yaml
+```yaml
+metadata:
+  namespace: development
 ```
 
 ---
@@ -143,6 +129,12 @@ List Namespaces
 
 ```bash
 kubectl get namespaces
+```
+
+or
+
+```bash
+kubectl get ns
 ```
 
 Create Namespace
@@ -157,22 +149,28 @@ Delete Namespace
 kubectl delete namespace development
 ```
 
-View Resources
+View Resources in Namespace
 
 ```bash
 kubectl get pods -n development
 ```
 
-Set Current Namespace
+Create Resource in Namespace
+
+```bash
+kubectl apply -f deployment.yaml -n development
+```
+
+Set Default Namespace
 
 ```bash
 kubectl config set-context --current --namespace=development
 ```
 
-Describe Namespace
+View Current Namespace
 
 ```bash
-kubectl describe namespace development
+kubectl config view --minify
 ```
 
 ---
@@ -180,66 +178,69 @@ kubectl describe namespace development
 ## Important Files (if applicable)
 
 | File | Purpose |
-|------|----------|
+|------|---------|
 | namespace.yaml | Namespace definition |
+| deployment.yaml | Application deployment |
 | resourcequota.yaml | Resource limits |
-| limitrange.yaml | Default limits |
-| role.yaml | Namespace RBAC |
+| limitrange.yaml | Default resource constraints |
 
 ---
 
 ## Real-World Use Cases
 
-- Development environment
-- Testing environment
-- Production environment
-- Multiple project teams
-- Department isolation
-- Customer isolation
-- Multi-tenant clusters
+- Development, QA, and Production environments
+- Multi-team Kubernetes clusters
+- Department-wise resource separation
+- Customer-specific workloads
+- CI/CD environments
+- RBAC implementation
+- Resource quota enforcement
 
 ---
 
 ## Advantages
 
-- Logical isolation
-- Better organization
-- Resource management
-- RBAC integration
+- Logical resource separation
 - Prevents naming conflicts
+- Simplifies cluster management
+- Supports RBAC
+- Enables Resource Quotas
 - Supports multi-tenancy
+- Easier monitoring and billing
 
 ---
 
 ## Limitations
 
 - Not physical isolation
-- Network communication remains possible unless restricted
+- Resources can still share worker nodes
+- Does not isolate network traffic by default
 - Cluster-wide resources are not namespaced
-- Requires additional management in large environments
+- Incorrect RBAC can expose resources across namespaces
 
 ---
 
 ## Common Interview Questions (Concept Only)
 
 - What is a Namespace?
-- Why are Namespaces needed?
-- Do Namespaces provide complete isolation?
-- What are the default Kubernetes namespaces?
-- Can Pods in different namespaces communicate?
-- Are Nodes namespaced?
-- Can Services communicate across namespaces?
-- What resources are cluster-wide?
+- Why are Namespaces used?
+- What is the default namespace?
+- Difference between Namespace and Cluster?
+- Are Namespaces physically isolated?
+- Which Kubernetes resources are not namespaced?
+- Can Pods communicate across namespaces?
+- How do you switch between namespaces?
+- How do Resource Quotas relate to Namespaces?
 
 ---
 
 ## Common Mistakes
 
-- Assuming Namespaces provide network isolation
-- Deploying everything into the default namespace
-- Forgetting to specify the namespace when managing resources
-- Confusing Namespace isolation with cluster isolation
-- Deleting a namespace without understanding that all contained resources will be deleted
+- Forgetting to specify the namespace during deployment
+- Assuming Namespaces provide complete security isolation
+- Creating all applications in the default namespace
+- Confusing Namespace isolation with Network Policies
+- Deleting a Namespace without checking its resources
 
 ---
 
@@ -247,31 +248,31 @@ kubectl describe namespace development
 
 | Problem | Cause | Solution |
 |----------|--------|----------|
-| Resource not found | Wrong namespace | Verify namespace |
-| Deployment missing | Created in another namespace | Use `-n` option |
-| Access denied | RBAC restriction | Check permissions |
-| Service cannot resolve | Wrong namespace | Use FQDN |
-| Namespace stuck deleting | Remaining finalizers | Remove finalizers if appropriate |
+| Resource not found | Wrong namespace | Verify namespace using `kubectl get ns` |
+| Pod not visible | Viewing different namespace | Use `kubectl get pods -A` |
+| Application cannot communicate | Wrong Service namespace | Verify Service DNS |
+| Access denied | RBAC issue | Check RoleBindings |
+| Resources missing | Namespace deleted | Restore or recreate resources |
 
 Useful Commands
 
 ```bash
-kubectl get namespaces
+kubectl get ns
 
-kubectl get all -n development
+kubectl get pods -A
+
+kubectl get pods -n development
 
 kubectl describe namespace development
 
-kubectl config view
-
-kubectl config current-context
+kubectl config view --minify
 ```
 
 ---
 
 ## Summary
 
-Namespaces provide logical separation of resources within a Kubernetes cluster. They enable multi-tenancy, simplify resource organization, support RBAC and quotas, and help isolate environments such as Development, Testing, and Production. However, they do not provide complete security or network isolation by themselves.
+Namespaces logically divide a Kubernetes cluster into isolated environments, allowing multiple teams and applications to share the same cluster safely. They simplify resource organization, support RBAC, Resource Quotas, and multi-tenancy, making them an essential feature in production Kubernetes environments.
 
 ---
 
@@ -279,24 +280,26 @@ Namespaces provide logical separation of resources within a Kubernetes cluster. 
 
 ## Overview
 
-The **default** namespace is the namespace automatically used when no namespace is specified.
+The **default** namespace is the namespace where Kubernetes places resources if no namespace is specified during creation.
 
-Every new Kubernetes cluster includes the default namespace.
-
-Unless explicitly configured otherwise, Kubernetes resources are created here.
+Every Kubernetes cluster contains a default namespace immediately after installation.
 
 > **Interview Tip**
 >
-> Production environments typically avoid using the default namespace for application deployments.
+> If you don't specify a namespace using the `-n` option or in the YAML manifest, Kubernetes creates the resource in the **default** namespace.
 
 ---
 
 ## Why It Is Used
 
-- Quick testing
-- Learning Kubernetes
+The default namespace is used for:
+
 - Small clusters
-- Default location for workloads
+- Learning Kubernetes
+- Quick testing
+- Temporary workloads
+
+Production environments should generally avoid deploying everything into the default namespace.
 
 ---
 
@@ -304,16 +307,12 @@ Unless explicitly configured otherwise, Kubernetes resources are created here.
 
 ```mermaid
 flowchart LR
+    User[User]
+    Default[default Namespace]
+    Resources[Pods, Services, Deployments]
 
-kubectl
-
-↓
-
-Default Namespace
-
-↓
-
-Resources
+    User --> Default
+    Default --> Resources
 ```
 
 ---
@@ -321,8 +320,11 @@ Resources
 ## Key Components
 
 | Component | Purpose |
-|-----------|----------|
-| default | Default namespace for workloads |
+|-----------|---------|
+| default Namespace | Default location for user resources |
+| Pods | Workloads |
+| Services | Networking |
+| Deployments | Application management |
 
 ---
 
@@ -334,25 +336,31 @@ Built-in Namespace
 
 ## Lifecycle / Workflow
 
-Resource Created
+```mermaid
+flowchart LR
+    A[Create Resource]
+    B[No Namespace Specified]
+    C[Resource Created in default]
 
-↓
-
-Namespace Not Specified
-
-↓
-
-Placed in Default Namespace
+    A --> B --> C
+```
 
 ---
 
 ## Configuration / Syntax (if applicable)
 
-Create Pod
+Example
 
-```bash
-kubectl apply -f pod.yaml
+```yaml
+metadata:
+  name: nginx
 ```
+
+Since no namespace is specified, the resource is created in the **default** namespace.
+
+---
+
+## Important Commands (if applicable)
 
 View Resources
 
@@ -360,75 +368,74 @@ View Resources
 kubectl get pods
 ```
 
----
-
-## Important Commands (if applicable)
+View Default Namespace
 
 ```bash
-kubectl get pods
-
-kubectl get deployments
-
-kubectl get svc
+kubectl get ns
 ```
 
 ---
 
 ## Important Files (if applicable)
 
-Standard Kubernetes YAML manifests
+| File | Purpose |
+|------|---------|
+| deployment.yaml | Default deployment |
 
 ---
 
 ## Real-World Use Cases
 
 - Labs
-- Practice clusters
-- Small internal environments
+- Tutorials
+- Small proof-of-concept clusters
 
 ---
 
 ## Advantages
 
-- Simple
+- Easy to use
 - No additional configuration
+- Good for beginners
 
 ---
 
 ## Limitations
 
 - Poor organization
-- Difficult to manage large environments
-- Not recommended for production applications
+- Not suitable for multi-team environments
+- Difficult to manage large clusters
 
 ---
 
 ## Common Interview Questions (Concept Only)
 
 - What is the default namespace?
+- When is it used?
 - Should production workloads use the default namespace?
 
 ---
 
 ## Common Mistakes
 
-- Deploying every application into the default namespace
+- Deploying everything into the default namespace
+- Forgetting namespace organization
 
 ---
 
 ## Troubleshooting
 
-Verify the current namespace using:
-
 ```bash
-kubectl config view --minify
+kubectl get pods
+
+kubectl get all
 ```
 
 ---
 
 ## Summary
 
-The default namespace is the automatically selected namespace when no other namespace is specified. It is useful for testing but is generally avoided for production workloads.
+The default namespace is Kubernetes' standard namespace for resources when no namespace is specified. It is convenient for learning but not recommended for large production environments.
 
 ---
 
@@ -436,24 +443,26 @@ The default namespace is the automatically selected namespace when no other name
 
 ## Overview
 
-Custom Namespaces are user-created namespaces used to logically separate applications, teams, or environments.
+Custom Namespaces are user-created namespaces used to organize applications, environments, or teams.
 
 Examples:
 
 - development
 - testing
+- staging
 - production
-- monitoring
-- logging
 
 ---
 
 ## Why It Is Used
 
+Custom Namespaces provide:
+
 - Environment separation
 - Team isolation
-- Security
-- Resource management
+- Better management
+- Resource quotas
+- RBAC integration
 
 ---
 
@@ -461,14 +470,15 @@ Examples:
 
 ```mermaid
 flowchart TB
+    Cluster[Kubernetes Cluster]
 
-Cluster
+    Cluster --> Dev[Development]
+    Cluster --> Test[Testing]
+    Cluster --> Prod[Production]
 
-Cluster --> Dev
-
-Cluster --> Test
-
-Cluster --> Prod
+    Dev --> App1[Applications]
+    Test --> App2[Applications]
+    Prod --> App3[Applications]
 ```
 
 ---
@@ -476,9 +486,10 @@ Cluster --> Prod
 ## Key Components
 
 | Component | Purpose |
-|-----------|----------|
-| Namespace | Logical grouping |
-| Resources | Applications |
+|-----------|---------|
+| Namespace | Resource grouping |
+| ResourceQuota | Resource limits |
+| RBAC | Access control |
 
 ---
 
@@ -486,39 +497,36 @@ Cluster --> Prod
 
 Examples
 
-- dev
-- test
+- development
+- testing
 - staging
-- prod
+- production
+- monitoring
+- logging
 
 ---
 
 ## Lifecycle / Workflow
 
-Create Namespace
+```mermaid
+flowchart LR
+    A[Create Namespace]
+    B[Deploy Applications]
+    C[Manage Resources]
+    D[Delete Namespace]
 
-↓
-
-Deploy Applications
-
-↓
-
-Manage Resources
+    A --> B --> C --> D
+```
 
 ---
 
 ## Configuration / Syntax (if applicable)
 
-Create Namespace
+```yaml
+kind: Namespace
 
-```bash
-kubectl create namespace production
-```
-
-Deploy
-
-```bash
-kubectl apply -f deployment.yaml -n production
+metadata:
+  name: production
 ```
 
 ---
@@ -526,13 +534,11 @@ kubectl apply -f deployment.yaml -n production
 ## Important Commands (if applicable)
 
 ```bash
-kubectl create namespace dev
+kubectl create namespace production
 
-kubectl get namespaces
+kubectl get ns
 
-kubectl delete namespace dev
-
-kubectl get pods -n dev
+kubectl delete namespace production
 ```
 
 ---
@@ -545,56 +551,55 @@ namespace.yaml
 
 ## Real-World Use Cases
 
-- Dev/Test/Prod
-- Team isolation
-- Customer isolation
+- Production clusters
+- Team separation
+- CI/CD environments
 - Multi-tenant Kubernetes
 
 ---
 
 ## Advantages
 
-- Better organization
-- Resource isolation
-- Easier management
-- RBAC support
+- Organized workloads
+- Better security
+- Easy management
 
 ---
 
 ## Limitations
 
 - Requires planning
-- Additional administration
+- More administrative overhead
 
 ---
 
 ## Common Interview Questions (Concept Only)
 
 - Why create custom namespaces?
-- How do you deploy to a specific namespace?
+- What are production namespace strategies?
 
 ---
 
 ## Common Mistakes
 
-- Creating unnecessary namespaces
-- Poor namespace naming conventions
+- Creating too many namespaces
+- Poor naming conventions
 
 ---
 
 ## Troubleshooting
 
-Verify resource location using:
-
 ```bash
-kubectl get all -A
+kubectl get ns
+
+kubectl describe namespace production
 ```
 
 ---
 
 ## Summary
 
-Custom Namespaces provide logical separation of workloads, making Kubernetes clusters easier to manage, secure, and organize.
+Custom Namespaces improve organization, security, and resource management by separating applications and teams within the same Kubernetes cluster.
 
 ---
 
@@ -602,24 +607,20 @@ Custom Namespaces provide logical separation of workloads, making Kubernetes clu
 
 ## Overview
 
-Resource Isolation refers to limiting and organizing Kubernetes resources within a namespace.
+Resource Isolation limits how resources are shared within a namespace.
 
-Namespaces alone organize resources, but they become more effective when combined with:
+Namespaces alone provide **logical separation**, while additional Kubernetes features enforce resource usage and access.
 
-- Resource Quotas
-- Limit Ranges
+Common isolation mechanisms include:
+
+- ResourceQuota
+- LimitRange
 - RBAC
 - Network Policies
 
 > **Interview Tip**
 >
-> **Namespaces organize resources.**
->
-> **Resource Quotas limit resource usage.**
->
-> **RBAC controls access.**
->
-> **Network Policies restrict network communication.**
+> Namespaces **do not automatically isolate CPU, Memory, or network traffic**. ResourceQuota, LimitRange, RBAC, and Network Policies are required to achieve effective isolation.
 
 ---
 
@@ -627,11 +628,11 @@ Namespaces alone organize resources, but they become more effective when combine
 
 Resource Isolation helps:
 
-- Prevent resource exhaustion
-- Ensure fair resource sharing
-- Improve security
-- Support multi-tenancy
-- Control CPU and memory usage
+- Prevent resource starvation
+- Protect production workloads
+- Enforce fair resource usage
+- Improve cluster stability
+- Implement multi-tenancy
 
 ---
 
@@ -639,16 +640,17 @@ Resource Isolation helps:
 
 ```mermaid
 flowchart TB
+    Namespace[Namespace]
 
-Namespace
+    Namespace --> Quota[ResourceQuota]
+    Namespace --> Limit[LimitRange]
+    Namespace --> RBAC[RBAC]
+    Namespace --> Network[Network Policies]
 
-Namespace --> ResourceQuota
-
-Namespace --> LimitRange
-
-Namespace --> RBAC
-
-Namespace --> Applications
+    Quota --> Resources[Pods & Services]
+    Limit --> Resources
+    RBAC --> Resources
+    Network --> Resources
 ```
 
 ---
@@ -656,77 +658,63 @@ Namespace --> Applications
 ## Key Components
 
 | Component | Purpose |
-|-----------|----------|
-| Namespace | Logical boundary |
-| ResourceQuota | Limits resource consumption |
-| LimitRange | Sets default requests and limits |
-| RBAC | Controls user access |
-| NetworkPolicy | Restricts network traffic |
+|-----------|---------|
+| ResourceQuota | Resource limits |
+| LimitRange | Default requests & limits |
+| RBAC | User access control |
+| Network Policies | Network isolation |
 
 ---
 
 ## Types (if applicable)
 
-| Isolation Type | Purpose |
-|----------------|----------|
-| Logical Isolation | Namespace |
-| Resource Isolation | ResourceQuota |
-| Access Isolation | RBAC |
-| Network Isolation | NetworkPolicy |
+Isolation Types
+
+- Resource Isolation
+- Security Isolation
+- Network Isolation
+- Access Isolation
 
 ---
 
 ## Lifecycle / Workflow
 
-Create Namespace
+```mermaid
+flowchart LR
+    A[Create Namespace]
+    B[Apply ResourceQuota]
+    C[Apply LimitRange]
+    D[Configure RBAC]
+    E[Apply Network Policies]
+    F[Deploy Applications]
 
-↓
-
-Apply ResourceQuota
-
-↓
-
-Deploy Applications
-
-↓
-
-Enforce Limits
+    A --> B --> C --> D --> E --> F
+```
 
 ---
 
 ## Configuration / Syntax (if applicable)
 
-Example ResourceQuota
+ResourceQuota
 
 ```yaml
-apiVersion: v1
-
 kind: ResourceQuota
+```
 
-metadata:
-  name: compute-quota
+LimitRange
 
-spec:
-  hard:
-    pods: "20"
-    requests.cpu: "8"
-    requests.memory: 16Gi
+```yaml
+kind: LimitRange
 ```
 
 ---
 
 ## Important Commands (if applicable)
 
-View Quotas
+View Resource Quotas
 
 ```bash
 kubectl get resourcequota
-```
-
-Describe Quota
-
-```bash
-kubectl describe resourcequota
 ```
 
 View LimitRanges
@@ -735,14 +723,20 @@ View LimitRanges
 kubectl get limitrange
 ```
 
+Describe Resource Quota
+
+```bash
+kubectl describe resourcequota
+```
+
 ---
 
 ## Important Files (if applicable)
 
 | File | Purpose |
-|------|----------|
+|------|---------|
 | resourcequota.yaml | Resource limits |
-| limitrange.yaml | Default requests and limits |
+| limitrange.yaml | Default limits |
 | role.yaml | RBAC |
 | networkpolicy.yaml | Network isolation |
 
@@ -750,51 +744,51 @@ kubectl get limitrange
 
 ## Real-World Use Cases
 
-- Shared development clusters
-- Enterprise Kubernetes
-- Team resource allocation
-- Production resource governance
-- Cost optimization
+- Shared Kubernetes clusters
+- Enterprise environments
+- Multi-team deployments
+- Production workloads
+- SaaS platforms
+- Kubernetes-as-a-Service
 
 ---
 
 ## Advantages
 
-- Prevents resource abuse
+- Prevents resource exhaustion
 - Improves cluster stability
-- Supports fair resource allocation
+- Supports multi-tenancy
 - Enhances security
-- Enables multi-tenant environments
+- Fair resource allocation
 
 ---
 
 ## Limitations
 
 - Requires careful planning
-- Incorrect limits can prevent workloads from running
-- Network isolation requires additional configuration
+- Misconfigured quotas can block deployments
+- Increased operational complexity
 
 ---
 
 ## Common Interview Questions (Concept Only)
 
 - What is Resource Isolation?
-- Does a Namespace limit CPU or memory automatically?
+- Does a Namespace isolate CPU and Memory?
 - What is ResourceQuota?
 - What is LimitRange?
-- How do Namespaces and ResourceQuotas work together?
-- Which Kubernetes feature controls user access?
-- Which feature provides network isolation?
+- How does RBAC improve isolation?
+- How do Network Policies complement Namespaces?
 
 ---
 
 ## Common Mistakes
 
-- Assuming Namespaces automatically enforce resource limits
-- Forgetting to configure ResourceQuotas
+- Assuming Namespaces provide complete isolation
+- Forgetting ResourceQuota
 - Ignoring LimitRanges
-- Confusing RBAC with ResourceQuota
-- Believing Namespaces alone provide complete isolation
+- Not configuring RBAC
+- Forgetting Network Policies
 
 ---
 
@@ -802,10 +796,10 @@ kubectl get limitrange
 
 | Problem | Cause | Solution |
 |----------|--------|----------|
-| Pod creation fails | Resource quota exceeded | Check quotas |
-| CPU request denied | Limit exceeded | Adjust requests or quotas |
-| Access denied | RBAC policy | Verify permissions |
-| Unexpected network communication | Missing NetworkPolicy | Configure network rules |
+| Pod creation fails | ResourceQuota exceeded | Increase quota or reduce resource requests |
+| Resource limits not applied | Missing LimitRange | Configure LimitRange |
+| Access denied | RBAC misconfiguration | Verify Roles and RoleBindings |
+| Unexpected network access | Missing Network Policies | Apply appropriate policies |
 
 Useful Commands
 
@@ -816,11 +810,13 @@ kubectl describe resourcequota
 
 kubectl get limitrange
 
-kubectl describe namespace development
+kubectl describe limitrange
+
+kubectl get networkpolicy
 ```
 
 ---
 
 ## Summary
 
-Resource Isolation combines Namespaces with ResourceQuotas, LimitRanges, RBAC, and Network Policies to organize workloads, control resource consumption, enforce access policies, and improve cluster stability in shared Kubernetes environments.
+Resource Isolation ensures fair and secure resource usage within Kubernetes by combining Namespaces with ResourceQuota, LimitRange, RBAC, and Network Policies. Together, these mechanisms enable secure, stable, and scalable multi-tenant Kubernetes environments.
